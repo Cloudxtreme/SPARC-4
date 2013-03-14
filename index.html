@@ -4,104 +4,30 @@
     <title>SPARC</title> 
 
   	<link class="include" rel="stylesheet" type="text/css" href="dist/jquery.jqplot.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/sparc.css"/>
   	<link rel="stylesheet" type="text/css" href="dist/jquery.jqplot.css"/>
   	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
 
     <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
-        <script>
-            $('#accountOverview').live('pageshow',function(event){
-              //var plot1 = $.jqplot ('chart1', [[3,7,9,1,5,3,8,2,5]]);
-            });
-            //function called when device page is shown
-            $('#devices').live('pageshow',function(event){
-                //code to call webservice
-                $.ajax({
-                  type: 'GET',
-                  url: "http://localhost:8080/com.sparc.webservice/ws/sparc/getDeviceList?callback=deviceListCallback",
-                  async: false,
-                  contentType: "application/json",
-                  dataType: 'jsonp'
-                });
-           });
-            //callback function specified in url above this is where you convert teh JSON into html
-            function deviceListCallback(response)
-            {
-                //this displays the response in the chrome console, this will be replaced with code to convert
-                // the json into html
-               var list = '<div data-role="collapsible-set" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" data-iconpos="right" data-content-theme="d">';
-                for(i=0; i< response.deviceList.length; i++) {
-                    var type = response.deviceList[i].type;
-                    list += '<div data-role="collapsible" data-collapsed="true">';
-                    list += '<h3>' + response.deviceList[i].name + '</h3>';
-                    list += '<select data-role="slider" name="'+ response.deviceList[i].name +' id=" '+response.deviceList[i].id+'"><option value="off">Off</option><option value="on">On</option></select>';
-                    list += '<p>Power Consumption: ' + response.deviceList[i].powerConsumption + '</p>';
-                    if(type == "hvac") {
-
-                    }
-                    else if(type == "light") {
-
-                    }
-                    else if(type == "plug") {
-
-                    }
-                    else {
-
-                    }
-                    list += '<a href="#" data-role="button" data-inline="true">Edit</a> <a href="#" data-role="button" data-inline="true">Schedule</a>'+'</div>';
-                } 
-               $('div.deviceList').html(list).trigger('create');
-               //note the .trigger('create') makes sure the Jquery mobiel styles are applied to dynamic content  
-            }
-            $('#incentives').live('pageshow',function(event){
-                //code to call webservice
-                $.ajax({
-                  type: 'GET',
-                  url: "http://localhost:8080/com.sparc.webservice/ws/sparc/getIncentiveList?callback=incentiveListCallback",
-                  async: false,
-                  contentType: "application/json",
-                  dataType: 'jsonp'
-                });
-           });
-          function incentiveListCallback(response)
-            {
-              
-               $('div.incentiveList').html("incentives").trigger('create');
-               //note the .trigger('create') makes sure the Jquery mobile styles are applied to dynamic content  
-            }
-            $('#notifications').live('pageshow',function(event){
-                //code to call webservice
-                $.ajax({
-                  type: 'GET',
-                  url: "http://localhost:8080/com.sparc.webservice/ws/sparc/getNotificationList?callback=notificationListCallback",
-                  async: false,
-                  contentType: "application/json",
-                  dataType: 'jsonp'
-                });
-           });
-          function notificationListCallback(response)
-            {
-              
-               $('div.notificationList').html("incentives").trigger('create');
-               //note the .trigger('create') makes sure the Jquery mobile styles are applied to dynamic content  
-            }
-      </script> 
+    <script src="jquery.validate.js"></script>
+    <script src="js/sparc.js"></script> 
   </head> 
   <body> 
     <div data-role="page" id="login">
       <div data-role="header">
-        <h1>Page Title</h1>
+        <h1>Login</h1>
       </div>
-      <div data-role="content">
- 
-        <form action="test.php" method="POST">
+      <div style="text-align:center;" data-role="content">
+        <img src="images/logo.png" />
+        <form id="loginForm" >
           <fieldset data-role="controlgroup">
-            <input type="text" name="username" id="username" value="" placeholder="Username"/>
-            <input type="text" name="password" id="password" value="" placeholder="Password"/>
-            <input type="submit" name="login" id="login" value="Login" />
+            <input type="text" class="required" name="username" id="username" value="" placeholder="Username"/>
+            <input type="text" class="required" name="password" id="password" value="" placeholder="Password"/>
+            <button data-theme="b" id="loginSubmit">Login</button>
           </fieldset>    
         </form>
-        <p><a href="#accountOverview" data-role="button">Bypass</a></p> 
+        <p><a href="#accountOverview" data-role="button" >Bypass</a></p> 
       </div>
     </div>
 
